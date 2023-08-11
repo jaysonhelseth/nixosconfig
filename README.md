@@ -1,0 +1,2 @@
+# nixosconfig
+My nixos configuration
