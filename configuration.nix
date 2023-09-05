@@ -52,7 +52,7 @@
   users.users.jayson = {
     isNormalUser = true;
     description = "Jayson Helseth";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [];
   };
 
@@ -61,12 +61,19 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-     wget
-     micro     
+  environment.systemPackages = with pkgs; [     
      btop
+     docker-compose
      fzf
+     htop
+     mc
+     micro
+     ncdu
+     neofetch
+     tailscale
+     tmux
+     vim
+     wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -76,6 +83,16 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
+
+  virtualisation = {
+    docker = {
+      enable = true;
+      autoPrune = {
+        enable = true;
+        dates = "weekly";
+      };
+    };
+  };
 
   # List services that you want to enable:
 
@@ -95,7 +112,7 @@
   };
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 1883 ];
+  networking.firewall.allowedTCPPorts = [ 1883 32400 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
