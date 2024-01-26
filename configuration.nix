@@ -66,6 +66,7 @@
      docker-compose
      fzf
      htop
+     lazydocker
      mc
      micro
      ncdu
@@ -107,12 +108,20 @@
         acl = [ "pattern readwrite #" ];
         omitPasswordAuth = true;
         settings.allow_anonymous = true;
+	      port = 1883;
+      }
+      {
+      	acl = [ "pattern readwrite #" ];
+        omitPasswordAuth = true;
+        settings.allow_anonymous = true;
+        settings.protocol = "websockets";
+        port = 9001;
       }
     ];
   };
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 1883 32400 ];
+  networking.firewall.allowedTCPPorts = [ 1883 32400 9001 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
